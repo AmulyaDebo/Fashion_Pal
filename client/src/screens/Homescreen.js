@@ -23,7 +23,7 @@ export default function Homescreen() {
       {console.log("products: ", products)}
      { console.log("Type of products:", typeof products)}
 
-        {loading?(<h1>Loading...</h1>):error?(<h1>Something went wrong</h1>):(<h1>{products.map(product=>{return<div className= 'card'><Products products={product}/></div>})}</h1>)}
+        {loading?(<h1>Loading...</h1>):error?(<h1>Something went wrong</h1>):(<h1>{products.map(product=>{return<div className= 'card' key={product._id}><Products products={product}/></div>})}</h1>)}
         
       </div>
     </div>

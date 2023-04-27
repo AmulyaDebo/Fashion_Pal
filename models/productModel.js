@@ -47,7 +47,8 @@ const productSchema=mongoose.Schema({
     },
     rating:{
         type:Number,
-        require:true
+        require:true,
+        default : 5
     },
     reviews:[]
 },{

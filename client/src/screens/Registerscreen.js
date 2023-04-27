@@ -1,20 +1,25 @@
 import React, { useState } from 'react'
-
+import {useDispatch,useSelector} from 'react-redux';
+import { registerNeewUser } from '../actions/userActions';
+import Error from '../components/Error';
 export default function Registerscreen() {
+  const registerstate = useSelector(state=>state.registerNewUserReducer)
+  const {loading,error,success} = registerstate
   const [name, setname] = useState(``)
   const [email, setemail] = useState(``)
   const [password, setpassword] = useState(``)
   const [cpassword, setcpassword] = useState(``)
-
+  const dispatch = useDispatch()
   function register(e) {
     e.preventDefault()
+    const user = {
+      name: name,
+      email: email,
+      password: password
+    }
 
     if (password === cpassword) {
-      const user = {
-        name: name,
-        email: email,
-        password: password
-      }
+      dispatch(registerNeewUser(user))
       // submit the form data here
     } else {
       alert('Passwords not matching')
@@ -28,6 +33,7 @@ export default function Registerscreen() {
           <div className='div'>
             <form onSubmit={register}>
               <h2 className='text-center'>Register</h2>
+              {error && (<Error error='Email address is already registered'/>)}
               <input
                 type='text'
                 placeholder='Name'
@@ -51,7 +57,7 @@ export default function Registerscreen() {
               />
 
               <input
-                type='text'
+                type='password'
                 placeholder='Password'
                 className='form-control'
                 value={password}
@@ -62,7 +68,7 @@ export default function Registerscreen() {
               />
 
               <input
-                type='text'
+                type='password'
                 placeholder='Confirm Password'
                 className='form-control'
                 value={cpassword}
@@ -76,6 +82,7 @@ export default function Registerscreen() {
                 <button type='submit' className='btn btn-dark'>
                   REGISTER
                 </button>
+                <a href='/login'>Click here to login</a>
               </div>
             </form>
           </div>

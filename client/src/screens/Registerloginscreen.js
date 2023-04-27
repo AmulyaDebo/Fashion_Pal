@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import {useDispatch,useSelector} from 'react-redux';
-import { loginUser } from '../actions/userActions';
+import { loginUser,adminloginUser } from '../actions/userActions';
 import Error from '../components/Error';
 
-export default function Loginscreen() {
-  const loginreducer = useSelector(state=>state.loginReducer)
+export default function Registerloginscreen() {
+  const loginreducer = useSelector(state=>state.adminLoginReducer)
   const {success,error} = loginreducer
    const [email, setemail] = useState(``)
   const [password, setpassword] = useState(``)
@@ -17,13 +17,13 @@ export default function Loginscreen() {
       email: email,
       password: password
     }
-    dispatch(loginUser(user))
+    dispatch(adminloginUser(user))
    
   }
 useEffect(()=>{
   if(localStorage.getItem('currentUser'))
   {
-    window.location.href="/homescreen"
+    window.location.href="/admindisplay"
   }
 })
   return (
@@ -35,7 +35,7 @@ useEffect(()=>{
           {error&&(<Error error='Invalid Credentials'/>)}
 
             <form onSubmit={login}>
-              <h2 className='text-center'>LOGIN</h2>
+              <h2 className='text-center'>ADMIN LOGIN</h2>
              
 
               <input
@@ -65,7 +65,7 @@ useEffect(()=>{
                 <button type='submit' className='btn btn-dark'>
                  LOGIN
                 </button>
-                <a href='/register'>Click here to register</a>
+               
               </div>
             </form>
           </div>
