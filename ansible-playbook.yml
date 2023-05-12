@@ -9,11 +9,16 @@
         src: ./Docker-compose.yml
         dest: ./
 
-    - 
+    - name: Print current working directory
+      command: pwd
+    - name: Check Docker Compose version
+      command: docker-compose --version
+
+
 
     # Pull the Docker images from Docker Hub
     - name: Pull the Docker images specifed in docker-compose
-      command: docker-compose pull
+      command: docker-compose pull --verbose
 
     # We don't start the containers because we need to copy the env.yaml file into the backend container
     # before we can start anything.
