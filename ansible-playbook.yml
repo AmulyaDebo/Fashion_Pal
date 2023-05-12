@@ -7,7 +7,7 @@
     - name: Copy Docker Compose file from host machine to remote host
       copy:
         src: ./Docker-compose.yml
-        dest: ./
+        dest: /path/to/remote/docker-compose.yml
 
     - name: Print current working directory
       command: pwd
@@ -18,7 +18,8 @@
 
     # Pull the Docker images from Docker Hub
     - name: Pull the Docker images specifed in docker-compose
-      command: docker-compose pull 
+      command: docker-compose -f /path/to/remote/docker-compose.yml pull
+
     - name: Debug Docker Compose output
       debug:
         var: output.stdout_lines
@@ -32,7 +33,7 @@
       command: docker-compose up --no-start
 
     - name: Copy the env.yaml file to backend Docker container
-      command: docker cp env.yaml fintrack-backend:/usr/src/app/env.yaml
+      command: docker cp env.yaml fashionpal-backend:/usr/src/app/env.yaml
 
     # Now we actually run the Docker containers because the env.yaml has been copied and the app will no longer crash
     # Detached mode is required, otherwise Jenkins build never exits
