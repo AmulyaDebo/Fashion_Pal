@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 export const registerNeewUser=(user)=>dispatch=>{
     dispatch({type:'USER_REGISTER_REQUEST'})
     axios

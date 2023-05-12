@@ -5,9 +5,9 @@
   "main": "index.js",
   "proxy": "http://localhost:5000/",
   "scripts": {
-    "test": "NODE_ENV=test jest",
-    "test:user": "TEST_TYPE=user jest",
-    "test:product": "TEST_TYPE=product jest"
+    "test": "jest --config jest.config.js",
+    "test:user": "jest --config jest.config.js  --testMatch='**/userRoute.test.js'",
+    "test:product": "jest --config jest.config.js  --testMatch='**/productRoute.test.js'"
   },
   "repository": {
     "type": "git",

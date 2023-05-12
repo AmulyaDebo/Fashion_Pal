@@ -21,8 +21,18 @@ app.get("", (req, res) => {
   res.send('This is from backend');
 });
 
-const port = 5000;
-app.listen(port, () => console.log("Server has started"));
+const startServer = (port) => {
+  return app.listen(port, () => console.log("Server has started"));
+};
+
+// Conditionally start the server based on the environment
+if (process.env.NODE_ENV !== 'test') {
+  const port = 5000;
+  startServer(port);
+}
+
+module.exports = app;
+
 
 
 

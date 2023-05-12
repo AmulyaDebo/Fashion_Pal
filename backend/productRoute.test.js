@@ -1,3 +1,9 @@
+
+
+
+
+
+
 const request = require('supertest');
 const Product = require('./models/productModel');
 
@@ -5,13 +11,16 @@ const app = require('./Server'); // Assuming the app file is named app.js
 const productPort = 9000;
 
 // Create and listen to the product test server
+
 let server;
+
 beforeAll((done) => {
   server = app.listen(productPort, () => {
     console.log(`Product test server is running on port ${productPort}`);
     done();
   });
 });
+
 
 // Close the product test server after all tests
 afterAll((done) => {
