@@ -1,0 +1,7 @@
+development:
+  PORT: '5000'
+  MONGODB_URI: "mongodb+srv://amulyabangari:amulya@cluster0.2cp7gsd.mongodb.net/fashionpal"
+
+test:
+  PORT: '4000'
+  TEST_MONGODB_URI: "mongodb+srv://amulyabangari:amulya@cluster0.2cp7gsd.mongodb.net/myapp_test"
