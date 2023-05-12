@@ -18,7 +18,12 @@
 
     # Pull the Docker images from Docker Hub
     - name: Pull the Docker images specifed in docker-compose
-      command: docker-compose pull --verbose
+      command: docker-compose pull 
+    - name: Debug Docker Compose output
+      debug:
+        var: output.stdout_lines
+      when: output is defined
+
 
     # We don't start the containers because we need to copy the env.yaml file into the backend container
     # before we can start anything.
