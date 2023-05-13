@@ -37,28 +37,31 @@ router.get("/getallproducts", async (req, res) => {
       })
   })
 
-  router.post("/addproduct",(req,res)=>{
-    const {product} = req.body;
+  router.route("/addproduct")
+  .post((req, res) => {
+    const { product } = req.body;
     console.log(product);
-    const newproduct = new Product({
-      name:product.name,
-      price:product.price,
-      description:product.description,
-      countInStock : product.countInStock,
-      image:product.image,
-      category:product.category,
-      gender:product.image
+    const newProduct = new Product({
+      name: product.name,
+      price: product.price,
+      description: product.description,
+      countInStock: product.countInStock,
+      image: product.image,
+      category: product.category,
+      gender: product.image
     });
-    
-    newproduct.save()
+
+    newProduct.save()
       .then(() => {
         res.send("Product added successfully");
       })
       .catch((err) => {
-        return res.status(400).json({message:"Something went wrong"})
+        console.error(err);
+        return res.status(400).json({ message: "Something went wrong" });
       });
   });
-  
+
+module.exports = router;
 
 module.exports=router
 
