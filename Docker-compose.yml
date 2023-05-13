@@ -2,14 +2,12 @@ services:
   fashionpal-frontend:
     image: amulya365/fashionpal-frontend:latest
     container_name: fashionpal-frontend
-    # Keep stdin_open because we don't want this container to exit immediately which it
-    # otherwise would have because there's no foreground processes
     stdin_open: true
     ports:
       - "3000:3000"
     networks:
-      amulaya_fashionpal:
-        ipv4_address: 192.168.43.2
+      fashionpal_network:
+        ipv4_address: 172.18.0.2
 
   fashionpal-backend:
     image: amuly365/fashionpal-backend:latest
@@ -17,17 +15,8 @@ services:
     ports:
       - "5000:5000"
     networks:
-      amulaya_fashionpal:
-        ipv4_address: 192.168.43.3
-    # Using Docker volume for persisting logs
-    # ./backend/logs refers to the path /home/backend/logs on the host machine
-    # and we're linking it to logs folder on the container machine where Morgan logger logs its output
+      fashionpal_network:
+        ipv4_address: 172.18.0.3
     volumes:
       - ./backend/logs:/usr/src/app/logs/
-  
-networks:
-  amulaya_fashionpal:
-    ipam:
-      driver: default
-      config:
-      - subnet: 192.168.43.0/24 
+
