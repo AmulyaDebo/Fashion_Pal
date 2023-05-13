@@ -1,5 +1,5 @@
 services:
-  fintrack-frontend:
+  fashionpal-frontend:
     image: amulya365/fashionpal-frontend:latest
     container_name: fashionpal-frontend
     # Keep stdin_open because we don't want this container to exit immediately which it
@@ -8,16 +8,16 @@ services:
     ports:
       - "3000:3000"
     networks:
-      fintrack:
+      amulaya_fashionpal:
         ipv4_address: 192.168.43.2
 
-  fintrack-backend:
+  fashionpal-backend:
     image: amuly365/fashionpal-backend:latest
     container_name: fashionpal-backend
     ports:
       - "5000:5000"
     networks:
-      fintrack:
+      amulaya_fashionpal:
         ipv4_address: 192.168.43.3
     # Using Docker volume for persisting logs
     # ./backend/logs refers to the path /home/backend/logs on the host machine
@@ -26,7 +26,7 @@ services:
       - ./backend/logs:/usr/src/app/logs/
   
 networks:
-  fintrack:
+  amulaya_fashionpal:
     ipam:
       driver: default
       config:
