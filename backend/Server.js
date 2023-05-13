@@ -9,9 +9,10 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'http://172.18.0.2:3000'],
   credentials: true
 }));
+
 
 app.use(bodyParser.json());
 
