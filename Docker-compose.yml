@@ -8,7 +8,7 @@ services:
       - "3000:3000"
     networks:
       fashionpal:
-        ipv4_address:  192.168.43.53 
+        ipv4_address:  172.16.144.176
   fashionpal-backend:
     image: amulya365/fashionpal-backend:latest
     container_name: fashionpal-backend
@@ -16,7 +16,7 @@ services:
       - "5000:5000"
     networks:
       fashionpal:
-        ipv4_address: 192.168.43.54
+        ipv4_address: 1172.16.144.177
     
     volumes:
       - ./backend/logs:/usr/src/app/logs/
