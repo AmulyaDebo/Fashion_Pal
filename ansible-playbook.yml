@@ -32,8 +32,7 @@
     - name: Create containers for the pulled Docker images
       command: docker-compose -f ./Docker-compose.yml up --no-start
 
-    - name: Copy the env.yaml file to backend Docker container
-      command: docker cp env.yaml fashionpal-backend:/usr/src/app/env.yaml
+   
 
     # Now we actually run the Docker containers because the env.yaml has been copied and the app will no longer crash
     # Detached mode is required, otherwise Jenkins build never exits
