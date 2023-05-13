@@ -7,6 +7,7 @@ router.use(cors());
 router.get("/getallproducts", async (req, res) => {
     try {
       const products = await Product.find({});
+      console.log(products)
       return res.json({ products });
     } catch (err) {
       return res.status(400).json({ message: "Something went wrong" });
