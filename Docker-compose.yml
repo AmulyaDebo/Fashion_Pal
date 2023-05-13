@@ -1,28 +1,28 @@
+version: "3.8"
 services:
   fashionpal-frontend:
     image: amulya365/fashionpal-frontend:latest
     container_name: fashionpal-frontend
-
     stdin_open: true
     ports:
       - "3000:3000"
     networks:
-      fashionpal:
-        ipv4_address:  172.16.144.176
+      amulaya_fashionpal:
+        ipv4_address: 172.16.144.176
+
   fashionpal-backend:
     image: amulya365/fashionpal-backend:latest
     container_name: fashionpal-backend
     ports:
       - "5000:5000"
     networks:
-      fashionpal:
-        ipv4_address: 172.16.144.176
+      amulaya_fashionpal:
+        ipv4_address: 172.16.144.177
     
     volumes:
       - ./backend/logs:/usr/src/app/logs/
+
 networks:
-  fashionpal:
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.16.144.168/21
+  amulaya_fashionpal:
+    external: true
+
