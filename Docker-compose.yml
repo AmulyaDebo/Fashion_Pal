@@ -10,8 +10,9 @@ services:
         ipv4_address: 172.18.0.2
 
   fashionpal-backend:
-    image: amuly365/fashionpal-backend:latest
+    image: amulya365/fashionpal-backend:latest
     container_name: fashionpal-backend
+    stdin_open: true
     ports:
       - "5000:5000"
     networks:
