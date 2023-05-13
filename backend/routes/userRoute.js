@@ -7,6 +7,7 @@ const router = express.Router()
 router.post("/register", async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });
+      console.log(user);
       if (user) {
         res.send("Email already in use");
       } else {
@@ -27,7 +28,7 @@ router.post("/register", async (req, res) => {
   router.post("/login", async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email, password: req.body.password });
-
+     
       if (user) {
         res.send(user);
       } else {
@@ -40,7 +41,7 @@ router.post("/register", async (req, res) => {
   router.post("/adminlogin", async (req, res) => {
     try {
       const user = await Admin.findOne({ email: req.body.email, password: req.body.password });
-
+      
       if (user) {
         res.send(user);
       } else {
