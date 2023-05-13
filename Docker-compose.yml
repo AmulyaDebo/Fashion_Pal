@@ -16,7 +16,7 @@ services:
       - "5000:5000"
     networks:
       fashionpal:
-        ipv4_address: 172.16.144.177
+        ipv4_address: 172.16.144.176
     
     volumes:
       - ./backend/logs:/usr/src/app/logs/
@@ -25,4 +25,4 @@ networks:
     ipam:
       driver: default
       config:
-      - subnet: 172.16.144.176/21
+      - subnet: 172.16.144.0/24
