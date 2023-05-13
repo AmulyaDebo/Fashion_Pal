@@ -7,8 +7,9 @@ const router = express.Router()
 router.post("/register", async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });
-      console.log(user);
+      
       if (user) {
+        console.log(user);
         res.send("Email already in use");
       } else {
         const newUser = new User({
