@@ -2,6 +2,32 @@ const express=require("express");
 const router=express.Router();
 const Product=require("../models/productModel");
 const cors = require("cors");
+
+const morgan = require("morgan");
+const { createLogger, transports } = require("winston");
+
+// Create a Winston logger
+const logger = createLogger({
+  transports: [
+    new transports.Console(),
+    new transports.File({ filename: "logs/application.log" }),
+  ],
+});
+
+// Enable CORS
+router.use(cors());
+
+// Add Morgan middleware for logging
+router.use(
+  morgan("combined", {
+    stream: {
+      write: (message) => {
+        logger.info(message.trim());
+      },
+    },
+  })
+);
+
 router.use(cors()); 
 
 router.get("/getallproducts", async (req, res) => {
