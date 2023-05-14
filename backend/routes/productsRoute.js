@@ -17,8 +17,14 @@ const logger = createLogger({
 router.use(cors());
 
 // Define the log format
+morgan.token("custom_timestamp", () => {
+  const date = new Date();
+  const timestamp = date.toUTCString();
+  return timestamp;
+});
+
 const logFormat =
-  ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"';
+  ':custom_timestamp GMT :method :url :status :res[content-length] - :response-time ms :req[body]';
 
 // Add Morgan middleware for logging
 router.use(
@@ -30,7 +36,6 @@ router.use(
     },
   })
 );
-
 router.use(cors()); 
 
 router.get("/getallproducts", async (req, res) => {
