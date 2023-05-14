@@ -1,8 +1,7 @@
-const express=require("express");
-const router=express.Router();
-const Product=require("../models/productModel");
+const express = require("express");
+const router = express.Router();
+const Product = require("../models/productModel");
 const cors = require("cors");
-
 const morgan = require("morgan");
 const { createLogger, transports } = require("winston");
 
@@ -17,9 +16,13 @@ const logger = createLogger({
 // Enable CORS
 router.use(cors());
 
+// Define the log format
+const logFormat =
+  ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"';
+
 // Add Morgan middleware for logging
 router.use(
-  morgan("combined", {
+  morgan(logFormat, {
     stream: {
       write: (message) => {
         logger.info(message.trim());
