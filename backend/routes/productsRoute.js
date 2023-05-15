@@ -5,7 +5,6 @@ const cors = require("cors");
 const morgan = require("morgan");
 const { createLogger, transports } = require("winston");
 
-
 router.use(cors()); 
 
 router.get("/getallproducts", async (req, res) => {
