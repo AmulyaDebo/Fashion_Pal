@@ -9,8 +9,21 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const morgan = require('morgan');
 
-// Create a write stream for morgan logging
-const accessLogStream = fs.createWriteStream('./logs/access.log', { flags: 'a' });
+// Define a custom morgan token for :data
+morgan.token('data', (req, res) => {
+  const requestData = {
+    ipAddress: req.ip,
+    method: req.method,
+    url: req.originalUrl,
+    status: res.statusCode,
+    responseTime: res.getHeader('X-Response-Time'),
+    userAgent: req.headers['user-agent']
+  };
+  return JSON.stringify(requestData);
+});
+
+// Create a write stream for the log file
+const logStream = fs.createWriteStream('access.log', { flags: 'a' });
 
 app.use(cors({
   origin: ['http://localhost:3000', 'http://172.18.0.2:3000'],
@@ -19,12 +32,15 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
+// Use morgan middleware with the custom token and log to the file
 app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms :data', {
-  stream: accessLogStream
+  stream: logStream
 }));
+
 
 app.use('/api/products/', productsRoute);
 app.use('/api/users/', userRoute);
+
 
 app.get("", (req, res) => {
   res.send('This is from backend');
