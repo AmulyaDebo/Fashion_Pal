@@ -17,8 +17,6 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms :data', {
-		stream: fs.createWriteStream('./logs/access.log', {flags: 'a'})
 
 app.use('/api/products/', productsRoute);
 app.use('/api/users/', userRoute);
