@@ -9,7 +9,6 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const morgan = require('morgan');
 const winston = require('winston');
-
 morgan.token('data', request => {
   if (request.body.password)
     request.body.password = '';
