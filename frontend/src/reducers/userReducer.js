@@ -51,7 +51,6 @@ export const loginReducer=(state={},action)=>{
     }
 }
 
-
 export const adminLoginReducer=(state={},action)=>{
     switch(action.type)
     {
