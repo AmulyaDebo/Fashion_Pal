@@ -1,9 +1,3 @@
-
-
-
-
-
-
 const request = require('supertest');
 const Product = require('./models/productModel');
 
