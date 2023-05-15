@@ -20,7 +20,7 @@ morgan.token('data', request => {
 const accessLogStream = fs.createWriteStream('./logs/access.log', {flags: 'a'});
 
 // Configure morgan middleware to log request details
-app.use(morgan('[:date[web]] :method :url :status :res[content-length] - :response-time ms', {
+app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms', {
 	stream: accessLogStream
 }));
 
