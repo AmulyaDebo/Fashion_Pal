@@ -1,6 +1,4 @@
-
 const request = require('supertest');
-const faker = require('faker');
 
 const userRoute = require('./routes/userRoute');
 const app = require('./Server'); // Replace with the path to your Express app file
@@ -22,7 +20,7 @@ afterAll((done) => {
 
 // Test registration route
 it('should register a new user', async () => {
-  const email = faker.internet.email(); // Generate a random email address
+  const email = generateRandomEmail(); // Generate a random email address
   const response = await request(app) // Use the server instance instead of app
     .post('/api/users/register')
     .send({
@@ -34,6 +32,14 @@ it('should register a new user', async () => {
   expect(response.status).toBe(200);
   expect(response.text).toBe('User registration successful');
 });
+
+// Rest of your test cases...
+
+// Helper function to generate a random email address
+function generateRandomEmail() {
+  const timestamp = new Date().getTime();
+  return `user${timestamp}@example.com`;
+}
 
 
 it('should return an error if email is already in use', async () => {
