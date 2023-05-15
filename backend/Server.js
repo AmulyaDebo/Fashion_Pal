@@ -10,6 +10,13 @@ const fs = require('fs');
 const morgan = require('morgan');
 const winston = require('winston');
 
+morgan.token('data', request => {
+	if (request.body.password)
+		request.body.password = ''
+	return JSON.stringify(request.body)
+})
+
+
 // Configure CORS
 app.use(cors({
   origin: ['http://localhost:3000', 'http://172.18.0.2:3000'],
