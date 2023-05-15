@@ -2,13 +2,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const mongoose = require('mongoose');
-const morgan = require('morgan');
-const fs = require('fs');
-
 const app = express();
 const productsRoute = require("./routes/productsRoute");
 const userRoute = require('./routes/userRoute');
-
+const yaml = require('js-yaml');
+const fs = require('fs');
+const morgan = require('morgan');
+const winston = require('winston');
 // Configure CORS
 app.use(cors({
   origin: ['http://localhost:3000', 'http://172.18.0.2:3000'],
