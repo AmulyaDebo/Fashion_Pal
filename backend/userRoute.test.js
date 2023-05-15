@@ -1,11 +1,13 @@
 
 const request = require('supertest');
+const faker = require('faker');
 
 const userRoute = require('./routes/userRoute');
 const app = require('./Server'); // Replace with the path to your Express app file
 let server; // Declare a variable to hold the server instance
 app.use('/api/users', userRoute);
 userPort = 4000;
+
 beforeAll((done) => {
   server = app.listen(userPort, () => {
     console.log(`User test server is running on port ${userPort}`);
@@ -17,19 +19,22 @@ beforeAll((done) => {
 afterAll((done) => {
   server.close(done);
 });
+
 // Test registration route
 it('should register a new user', async () => {
+  const email = faker.internet.email(); // Generate a random email address
   const response = await request(app) // Use the server instance instead of app
     .post('/api/users/register')
     .send({
       name: 'John Doe',
-      email: 'john@example.com',
+      email,
       password: 'password123',
     });
 
   expect(response.status).toBe(200);
   expect(response.text).toBe('User registration successful');
 });
+
 
 it('should return an error if email is already in use', async () => {
   const response = await request(app) // Use the server instance instead of app
