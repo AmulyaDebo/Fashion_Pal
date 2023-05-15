@@ -12,3 +12,11 @@ The Fashion Pal project is a comprehensive online platform for dress shopping. I
 - Place your order: A booking option is available for every logged-in user
 - Customer details: Customer Details will be taken for delivery
 - View order details: Customer can view the bill, order number, and the arriving date
+
+# Tools Used
+-Source Control Management - GitHub
+-Build - npm
+-Continuous Integration - Jenkins
+-Containerization - Docker
+-Continuous deployment - Ansible
+-Monitoring - ELK Stack (Elastic Search, Logstash, Kibana)
