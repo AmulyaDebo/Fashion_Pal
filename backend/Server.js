@@ -9,14 +9,19 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const morgan = require('morgan');
 
+// Create a write stream for morgan logging
+const accessLogStream = fs.createWriteStream('./logs/access.log', { flags: 'a' });
+
 app.use(cors({
   origin: ['http://localhost:3000', 'http://172.18.0.2:3000'],
   credentials: true
 }));
 
-
 app.use(bodyParser.json());
 
+app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms :data', {
+  stream: accessLogStream
+}));
 
 app.use('/api/products/', productsRoute);
 app.use('/api/users/', userRoute);
