@@ -7,6 +7,7 @@ const productsRoute = require("./routes/productsRoute");
 const userRoute = require('./routes/userRoute');
 const yaml = require('js-yaml');
 const fs = require('fs');
+const morgan = require('morgan');
 
 app.use(cors({
   origin: ['http://localhost:3000', 'http://172.18.0.2:3000'],
@@ -15,6 +16,9 @@ app.use(cors({
 
 
 app.use(bodyParser.json());
+
+app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms :data', {
+		stream: fs.createWriteStream('./logs/access.log', {flags: 'a'})
 
 app.use('/api/products/', productsRoute);
 app.use('/api/users/', userRoute);
