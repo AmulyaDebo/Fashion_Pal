@@ -1,3 +1,4 @@
+
 const request = require('supertest');
 
 const userRoute = require('./routes/userRoute');
@@ -17,7 +18,6 @@ afterAll((done) => {
   server.close(done);
 });
 // Test registration route
-
 it('should register a new user', async () => {
   const response = await request(app) // Use the server instance instead of app
     .post('/api/users/register')
@@ -27,13 +27,16 @@ it('should register a new user', async () => {
       password: 'password123',
     });
 
+  expect(response.status).toBe(200);
+  expect(response.text).toBe('User registration successful');
+});
 
 it('should return an error if email is already in use', async () => {
   const response = await request(app) // Use the server instance instead of app
     .post('/api/users/register')
     .send({
       name: 'Jane Doe',
-      email: 'xyz@gmail.com.com',
+      email: 'john@example.com',
       password: 'password456',
     });
 
@@ -46,8 +49,8 @@ it('should log in a user with valid credentials', async () => {
   const response = await request(app) // Use the server instance instead of app
     .post('/api/users/login')
     .send({
-      email: 'xyz@gmail.com',
-      password: '12345',
+      email: 'john@example.com',
+      password: 'password123',
     });
 
   expect(response.status).toBe(200);
@@ -58,7 +61,7 @@ it('should return an error with invalid credentials', async () => {
   const response = await request(app) // Use the server instance instead of app
     .post('/api/users/login')
     .send({
-      email: 'xyz@gmail.com',
+      email: 'john@example.com',
       password: 'wrongpassword',
     });
 
