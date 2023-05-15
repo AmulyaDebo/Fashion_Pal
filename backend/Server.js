@@ -10,32 +10,6 @@ const fs = require('fs');
 const morgan = require('morgan');
 const winston = require('winston');
 
-// Define the custom timestamp format
-morgan.token('CUSTOM_TIMESTAMP', () => {
-  const now = new Date();
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const timestamp = `${days[now.getUTCDay()]}, ${now.getUTCDate()} ${months[now.getUTCMonth()]} ${now.getUTCFullYear()} ${now.getUTCHours()}:${now.getUTCMinutes()}:${now.getUTCSeconds()}`;
-  return timestamp;
-});
-
-// Create a custom Winston logger with a file transport
-const logger = winston.createLogger({
-  transports: [
-    new winston.transports.File({ filename: 'logs/app.log' }),
-  ],
-});
-
-// Define the custom morgan format
-const morganFormat = ':CUSTOM_TIMESTAMP GMT :method :url :status :res[content-length] - :response-time ms :data';
-
-// Create a stream for morgan to write logs
-const morganStream = {
-  write: (message) => {
-    logger.info(message.trim());
-  },
-};
-
 // Configure CORS
 app.use(cors({
   origin: ['http://localhost:3000', 'http://172.18.0.2:3000'],
@@ -45,8 +19,9 @@ app.use(cors({
 // Parse JSON request bodies
 app.use(bodyParser.json());
 
-// Configure morgan logging
-app.use(morgan(morganFormat, { stream: morganStream }));
+app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms :data', {
+		stream: fs.createWriteStream('./logs/access.log', {flags: 'a'})
+	}))
 
 // Define routes
 app.use('/api/products/', productsRoute);
