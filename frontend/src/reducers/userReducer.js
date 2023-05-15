@@ -21,7 +21,6 @@ export const registerNewUserReducer=(state={},action)=>{
             default: return state;
         }
 }
-
 export const loginReducer=(state={},action)=>{
     switch(action.type)
     {
