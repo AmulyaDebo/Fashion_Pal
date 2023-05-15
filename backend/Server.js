@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const app = express();
 const productsRoute = require("./routes/productsRoute");
 const userRoute = require('./routes/userRoute');
+const yaml = require('js-yaml');
+const fs = require('fs');
+const morgan = require('morgan');
 const winston = require('winston');
 
 // Configure CORS
