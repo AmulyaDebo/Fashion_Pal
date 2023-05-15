@@ -15,6 +15,15 @@ morgan.token('data', request => {
 		request.body.password = ''
 	return JSON.stringify(request.body)
 })
+
+// Create a write stream to the log file
+const accessLogStream = fs.createWriteStream('./logs/access.log', {flags: 'a'});
+
+// Configure morgan middleware to log request details
+app.use(morgan('[:date[web]] :method :url :status :res[content-length] - :response-time ms', {
+	stream: accessLogStream
+}));
+
 // Configure CORS
 app.use(cors({
   origin: ['http://localhost:3000', 'http://172.18.0.2:3000'],
@@ -23,10 +32,7 @@ app.use(cors({
 
 // Parse JSON request bodies
 app.use(bodyParser.json());
-app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms :data', {
-		stream: fs.createWriteStream('./logs/access.log', {flags: 'a'})
-	}))
-app.use(express.json())
+
 // Define routes
 app.use('/api/products/', productsRoute);
 app.use('/api/users/', userRoute);
@@ -71,13 +77,9 @@ dbconnect.on('connected', () => {
   console.log('MongoDB connection successful');
 });
 
-
-
-
 if (environment !== 'test') {
   const port = PORT || 5000;
   app.listen(port, () => console.log("Server has started"));
 }
 
 module.exports = app;
-
