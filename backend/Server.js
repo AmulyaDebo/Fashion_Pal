@@ -10,6 +10,11 @@ const fs = require('fs');
 const morgan = require('morgan');
 const winston = require('winston');
 
+morgan.token('data', request => {
+	if (request.body.password)
+		request.body.password = ''
+	return JSON.stringify(request.body)
+})
 // Configure CORS
 app.use(cors({
   origin: ['http://localhost:3000', 'http://172.18.0.2:3000'],
@@ -18,7 +23,9 @@ app.use(cors({
 
 // Parse JSON request bodies
 app.use(bodyParser.json());
-
+app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms :data', {
+		stream: fs.createWriteStream('./logs/access.log', {flags: 'a'})
+	}))
 // Define routes
 app.use('/api/products/', productsRoute);
 app.use('/api/users/', userRoute);
@@ -63,27 +70,8 @@ dbconnect.on('connected', () => {
   console.log('MongoDB connection successful');
 });
 
-// Configure winston logger
-const logger = winston.createLogger({
-  transports: [
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
-      )
-    }),
-    new winston.transports.File({
-      filename: './logs/access.log',
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
-      )
-    })
-  ]
-});
 
-// Set the logger as the default express logger
-app.use(express.json({ stream: logger.stream }));
+
 
 // Start the server
 if (environment !== 'test') {
