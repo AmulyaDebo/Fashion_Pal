@@ -2,20 +2,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
+const fs = require('fs');
+
 const app = express();
 const productsRoute = require("./routes/productsRoute");
 const userRoute = require('./routes/userRoute');
-const yaml = require('js-yaml');
-const fs = require('fs');
-const morgan = require('morgan');
-const winston = require('winston');
-
-morgan.token('data', request => {
-	if (request.body.password)
-		request.body.password = ''
-	return JSON.stringify(request.body)
-})
-
 
 // Configure CORS
 app.use(cors({
@@ -26,9 +18,14 @@ app.use(cors({
 // Parse JSON request bodies
 app.use(bodyParser.json());
 
-app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms :data', {
-		stream: fs.createWriteStream('./logs/access.log', {flags: 'a'})
-	}))
+// Create a write stream for logging
+const accessLogStream = fs.createWriteStream('./logs/access.log', { flags: 'a' });
+
+// Define the logging format
+const logFormat = ':date[web] :method :url :status :res[content-length] - :response-time ms';
+
+// Use the morgan middleware for logging
+app.use(morgan(logFormat, { stream: accessLogStream }));
 
 // Define routes
 app.use('/api/products/', productsRoute);
