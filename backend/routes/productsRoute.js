@@ -5,37 +5,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const { createLogger, transports } = require("winston");
 
-// Create a Winston logger
-const logger = createLogger({
-  transports: [
-    new transports.Console(),
-    new transports.File({ filename: "logs/application.log" }),
-  ],
-});
 
-// Enable CORS
-router.use(cors());
-
-// Define the log format
-morgan.token("custom_timestamp", () => {
-  const date = new Date();
-  const timestamp = date.toUTCString();
-  return timestamp;
-});
-
-const logFormat =
-  ':custom_timestamp GMT :method :url :status :res[content-length] - :response-time ms :req[body]';
-
-// Add Morgan middleware for logging
-router.use(
-  morgan(logFormat, {
-    stream: {
-      write: (message) => {
-        logger.info(message.trim());
-      },
-    },
-  })
-);
 router.use(cors()); 
 
 router.get("/getallproducts", async (req, res) => {
