@@ -73,10 +73,10 @@ dbconnect.on('connected', () => {
 
 
 
-// Start the server
 if (environment !== 'test') {
   const port = PORT || 5000;
-  app.listen(port, () => logger.info(`Server has started on port ${port}`));
+  app.listen(port, () => console.log("Server has started"));
 }
 
 module.exports = app;
+
