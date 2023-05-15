@@ -11,17 +11,17 @@ const morgan = require('morgan');
 const winston = require('winston');
 
 morgan.token('data', request => {
-	if (request.body.password)
-		request.body.password = ''
-	return JSON.stringify(request.body)
-})
+  if (request.body.password)
+    request.body.password = '';
+  return JSON.stringify(request.body);
+});
 
 // Create a write stream to the log file
-const accessLogStream = fs.createWriteStream('./logs/access.log', {flags: 'a'});
+const accessLogStream = fs.createWriteStream('./logs/access.log', { flags: 'a' });
 
-// Configure morgan middleware to log request details
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms', {
-	stream: accessLogStream
+// Configure morgan middleware to log request details in JSON format
+app.use(morgan('{"method": ":method", "url": ":url", "status": ":status", "content_length": ":res[content-length]", "response_time": ":response-time"}', {
+  stream: accessLogStream
 }));
 
 // Configure CORS
