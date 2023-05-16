@@ -16,7 +16,7 @@ morgan.token('data', request => {
 });
 
 // Create a write stream to the log file
-const accessLogStream = fs.createWriteStream('./access.log', { flags: 'a' });
+const accessLogStream = fs.createWriteStream('./access.log', { flags: 'w' });
 
 // Configure morgan middleware to log request details in JSON format
 app.use(morgan('{"timestamp": ":date[iso]", "method": ":method", "url": ":url", "status_code": ":status", "content_length": ":res[content-length]", "response_time": ":response-time"}', {
@@ -24,7 +24,7 @@ app.use(morgan('{"timestamp": ":date[iso]", "method": ":method", "url": ":url", 
    immediate: false
 }));
 
-accessLogStream.write('\n');
+
 // Configure CORS
 app.use(cors({
   origin: ['http://localhost:3000', 'http://172.18.0.2:3000'],
