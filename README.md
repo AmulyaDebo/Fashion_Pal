@@ -8,7 +8,7 @@ The Fashion Pal project is a comprehensive online platform for dress shopping. I
 - Customer login: A customer can create or sign up for a new account or sign to an already existing account
 - User Interface: Display all the dresses and show the count
 - Make a list of your favorite dresses: Customers can add desired dresses to the cart
--
+
 # Tools Used
 - Source Control Management - GitHub
 - Build - npm
